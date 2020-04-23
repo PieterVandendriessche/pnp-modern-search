@@ -16,6 +16,7 @@ import { find, isEqual } from '@microsoft/sp-lodash-subset';
 import RefinersSortOption from '../../../../models/RefinersSortOptions';
 import RefinerSortDirection from '../../../../models/RefinersSortDirection';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { IRefinerDeeplink } from "./IRefinerDeeplinks";
 
 export default class SearchRefinersContainer extends React.Component<ISearchRefinersContainerProps, ISearchRefinersContainerState> {
 
@@ -245,6 +246,32 @@ export default class SearchRefinersContainer extends React.Component<ISearchRefi
       selectedRefinementFilters: newFilters,
       shouldResetFilters: false
     });
+    // Update the filter deep link
+    let updatedFilters: IRefinementFilter[] = newFilters;
+    let refinerDeepLinkValues: IRefinerDeeplink[] = [];
+
+    updatedFilters.forEach(updatedFilter => {
+      let deepLinkValue: IRefinerDeeplink = {
+        n: updatedFilter.FilterName,
+        t: []
+      };
+
+      updatedFilter.Values.forEach(updatedFilterValue => {
+        deepLinkValue.t.push(
+          encodeURIComponent(updatedFilterValue.RefinementValue)
+        );
+      });
+
+      refinerDeepLinkValues.push(deepLinkValue);
+    });
+
+    let updatedUrl: string = `${window.location.protocol}//${
+      window.location.host
+      }${window.location.pathname}?filters=${JSON.stringify(
+        refinerDeepLinkValues
+      )}`;
+
+    window.history.pushState("UpdatedFilterState", "Search", updatedUrl);
 
     this.props.onUpdateFilters(newFilters);
   }
