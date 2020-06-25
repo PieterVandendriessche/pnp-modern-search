@@ -211,7 +211,6 @@ export default class SearchRefinersContainer extends React.Component<ISearchRefi
    * @param operator the operator (FQL) (i.e AND/OR)
    */
   private onFilterValuesUpdated(filterName: string, filterValues: IRefinementValue[], operator: RefinementOperator) {
-
     let newFilters = [];
 
     const refinementFilter: IRefinementFilter = {
@@ -221,31 +220,39 @@ export default class SearchRefinersContainer extends React.Component<ISearchRefi
     };
 
     // Get the index of the filter in the current selected filters collection
-    const filterIdx = this.state.selectedRefinementFilters.map(selected => { return selected.FilterName; }).indexOf(filterName);
+    const filterIdx = this.state.selectedRefinementFilters
+      .map(selected => {
+        return selected.FilterName;
+      })
+      .indexOf(filterName);
 
     if (filterIdx !== -1) {
-
       if (filterValues.length > 0) {
         // Update value for the specific filters
-        newFilters = update(this.state.selectedRefinementFilters, { [filterIdx]: { $set: refinementFilter } });
+        newFilters = update(this.state.selectedRefinementFilters, {
+          [filterIdx]: { $set: refinementFilter }
+        });
       } else {
         // If no values, we remove the filter
-        newFilters = update(this.state.selectedRefinementFilters, { $splice: [[filterIdx, 1]] });
+        newFilters = update(this.state.selectedRefinementFilters, {
+          $splice: [[filterIdx, 1]]
+        });
       }
-
     } else {
-
       if (filterValues.length > 0) {
         // If does not exist, add to selected filters collection
-        newFilters = update(this.state.selectedRefinementFilters, { $push: [refinementFilter] });
+        newFilters = update(this.state.selectedRefinementFilters, {
+          $push: [refinementFilter]
+        });
       }
     }
 
-    // Very important to reset the 'reset' flag after an udpdate
+    // Very important to reset the 'reset' flag after an update
     this.setState({
       selectedRefinementFilters: newFilters,
       shouldResetFilters: false
     });
+
     // Update the filter deep link
     let updatedFilters: IRefinementFilter[] = newFilters;
     let refinerDeepLinkValues: IRefinerDeeplink[] = [];
@@ -257,19 +264,27 @@ export default class SearchRefinersContainer extends React.Component<ISearchRefi
       };
 
       updatedFilter.Values.forEach(updatedFilterValue => {
-        deepLinkValue.t.push(
-          encodeURIComponent(updatedFilterValue.RefinementValue)
-        );
+        deepLinkValue.t.push(encodeURIComponent(updatedFilterValue.RefinementValue));
       });
 
       refinerDeepLinkValues.push(deepLinkValue);
     });
 
-    let updatedUrl: string = `${window.location.protocol}//${
-      window.location.host
-      }${window.location.pathname}?filters=${JSON.stringify(
-        refinerDeepLinkValues
-      )}`;
+    let updatedUrl: string = `${window.location.protocol}//${window.location.host}${window.location.pathname}?filters=${JSON.stringify(
+      refinerDeepLinkValues
+    )}`;
+
+    //Append existing search query
+    var urlParamsOldUrl = new URLSearchParams(window.location.search);
+    var searchParameter = urlParamsOldUrl.get('q');
+
+    if (searchParameter != null || searchParameter.length < 0) {
+      updatedUrl += `&q=${searchParameter}`;
+    }
+
+
+
+
 
     window.history.pushState("UpdatedFilterState", "Search", updatedUrl);
 

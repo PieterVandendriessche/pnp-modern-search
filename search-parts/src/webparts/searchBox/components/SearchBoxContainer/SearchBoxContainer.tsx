@@ -1,14 +1,15 @@
-import * as React from                               'react';
-import { ISearchBoxContainerProps } from             './ISearchBoxContainerProps';
-import * as strings from                             'SearchBoxWebPartStrings';
-import ISearchBoxContainerState from                 './ISearchBoxContainerState';
-import { PageOpenBehavior, QueryPathBehavior, UrlHelper } from  '../../../../helpers/UrlHelper';
-import { MessageBar, MessageBarType } from           'office-ui-fabric-react/lib/MessageBar';
+import * as React from 'react';
+import { ISearchBoxContainerProps } from './ISearchBoxContainerProps';
+import * as strings from 'SearchBoxWebPartStrings';
+import ISearchBoxContainerState from './ISearchBoxContainerState';
+import { PageOpenBehavior, QueryPathBehavior, UrlHelper } from '../../../../helpers/UrlHelper';
+import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 import styles from '../SearchBoxWebPart.module.scss';
 import { ITheme } from '@uifabric/styling';
 import SearchBoxAutoComplete from '../SearchBoxAutoComplete/SearchBoxAutoComplete';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { IconButton } from 'office-ui-fabric-react/lib/Button';
+import ISearchQuery from '../../../../models/ISearchQuery';
 
 export default class SearchBoxContainer extends React.Component<ISearchBoxContainerProps, ISearchBoxContainerState> {
 
@@ -44,9 +45,9 @@ export default class SearchBoxContainer extends React.Component<ISearchBoxContai
         <SearchBox
           placeholder={this.props.placeholderText ? this.props.placeholderText : strings.SearchInputPlaceholder}
           theme={this.props.themeVariant as ITheme}
-          className={ styles.searchTextField }
-          value={ this.state.searchInputValue }
-          autoComplete= "off"
+          className={styles.searchTextField}
+          value={this.state.searchInputValue}
+          autoComplete="off"
           onChange={(value) => this.setState({ searchInputValue: value })}
           onSearch={() => this._onSearch(this.state.searchInputValue)}
           onClear={() => this._onSearch('', true)}
@@ -55,7 +56,7 @@ export default class SearchBoxContainer extends React.Component<ISearchBoxContai
           {this.state.searchInputValue &&
             <IconButton
               onClick={() => this._onSearch(this.state.searchInputValue)}
-              iconProps={{iconName: 'Forward' }}
+              iconProps={{ iconName: 'Forward' }}
             />
           }
         </div>
@@ -72,7 +73,10 @@ export default class SearchBoxContainer extends React.Component<ISearchBoxContai
     // Don't send empty value
     if (queryText || isReset) {
 
-      let query = queryText;
+      let query: ISearchQuery = {
+        rawInputValue: queryText,
+        enhancedQuery: "",
+      };
 
       this.setState({
         searchInputValue: queryText,
@@ -116,25 +120,25 @@ export default class SearchBoxContainer extends React.Component<ISearchBoxContai
     let renderErrorMessage: JSX.Element = null;
 
     if (this.state.errorMessage) {
-      renderErrorMessage = <MessageBar messageBarType={ MessageBarType.error }
-                                        dismissButtonAriaLabel='Close'
-                                        isMultiline={ false }
-                                        onDismiss={ () => {
-                                          this.setState({
-                                            errorMessage: null,
-                                          });
-                                        }}
-                                        className={styles.errorMessage}>
-                                        { this.state.errorMessage }</MessageBar>;
+      renderErrorMessage = <MessageBar messageBarType={MessageBarType.error}
+        dismissButtonAriaLabel='Close'
+        isMultiline={false}
+        onDismiss={() => {
+          this.setState({
+            errorMessage: null,
+          });
+        }}
+        className={styles.errorMessage}>
+        {this.state.errorMessage}</MessageBar>;
     }
 
     const renderSearchBox = this.props.enableQuerySuggestions ?
-                          this.renderSearchBoxWithAutoComplete() :
-                          this.renderBasicSearchBox();
+      this.renderSearchBoxWithAutoComplete() :
+      this.renderBasicSearchBox();
     return (
       <div className={styles.searchBox}>
-        { renderErrorMessage }
-        { renderSearchBox }
+        {renderErrorMessage}
+        {renderSearchBox}
       </div>
     );
   }
