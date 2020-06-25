@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-  "id": "e899ac12-9256-4c8d-a8ad-dbd20fc459c3",
+  "id": "0fd41ef3-e470-42d1-9259-3c0b498bcd24",
   "alias": "SearchRefinersWebPart",
   "componentType": "WebPart",
   "version": "*",
@@ -13,7 +13,7 @@
   ],
   "loadLegacyFabricCss": true,
   "preconfiguredEntries": [{
-    "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+    "groupId": "2aa03d19-7a7d-41f9-871c-7d4a0eb7031f",
     "group": {
       "default": "PnP"
     },

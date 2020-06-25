@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-  "id": "096b96cc-8a44-41fa-9b4d-c0ab2ab2a779",
+  "id": "eac74665-3ab0-4eb3-8518-17d256799925",
   "alias": "SearchBoxWebPart",
   "componentType": "WebPart",
   "version": "*",
@@ -11,14 +11,18 @@
   "supportedHosts": ["SharePointWebPart"],
   "loadLegacyFabricCss": true,
   "preconfiguredEntries": [{
-    "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
-    "group": { 
-      "default": "PnP" 
+    "groupId": "2aa03d19-7a7d-41f9-871c-7d4a0eb7031f",
+    "group": {
+      "default": "PnP"
     },
-    "title": { 
-      "default": "Search Box" , "fr-fr": "Boîte de recherche"
+    "title": {
+      "default": "Search Box",
+      "fr-fr": "Boîte de recherche"
     },
-    "description": { "default": "Allows users to enter query keywords", "fr-fr": "Permet aux utilisateurs d'entrer des mots clés de recherche." },
+    "description": {
+      "default": "Allows users to enter query keywords",
+      "fr-fr": "Permet aux utilisateurs d'entrer des mots clés de recherche."
+    },
     "officeFabricIconFontName": "Search",
     "properties": {
       "defaultQueryKeywords": "",

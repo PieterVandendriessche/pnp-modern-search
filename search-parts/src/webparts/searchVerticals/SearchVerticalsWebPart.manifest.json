@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-  "id": "9d441773-f735-46a3-9ca0-9e2eb4bef203",
+  "id": "6bd509ae-659e-4866-a76d-e7459309dedf",
   "alias": "SearchVerticalsWebPart",
   "componentType": "WebPart",
   "version": "*",
@@ -10,34 +10,33 @@
   "supportedHosts": ["SharePointWebPart"],
   "loadLegacyFabricCss": true,
   "preconfiguredEntries": [{
-    "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+    "groupId": "2aa03d19-7a7d-41f9-871c-7d4a0eb7031f",
     "group": {
-        "default": "PnP"
+      "default": "PnP"
     },
     "title": {
       "default": "Search Verticals",
       "fr-fr": "Verticaux de recherche"
-  },
-  "description": {
+    },
+    "description": {
       "default": "Allows you to search by search verticals",
-      "fr-fr": "Permets de rechercher à travers des verticaux de recherche"
-  },
+      "fr-fr": "Permets de rechercher ï¿½ travers des verticaux de recherche"
+    },
     "officeFabricIconFontName": "Sections",
     "properties": {
-      "verticals": [
-        {
+      "verticals": [{
           "key": "64db0487-0b73-4ffa-b250-d7869d85b7fe",
           "queryTemplate": "{searchTerms}",
           "resultSourceId": "78b793ce-7956-4669-aa3b-451fc5defebf",
           "tabName": "Videos",
-          "iconName" : "Video"
+          "iconName": "Video"
         },
         {
           "key": "afb855dc-7808-4366-a320-4a73be69a979",
           "queryTemplate": "{searchTerms}",
           "resultSourceId": "b09a7990-05ea-4af9-81ef-edfab16c4e31",
           "tabName": "People",
-          "iconName" : "People"
+          "iconName": "People"
         },
         {
           "key": "9da0e1d9-4765-42ff-b562-cf7796d408f6",
